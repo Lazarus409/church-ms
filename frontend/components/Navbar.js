@@ -46,7 +46,7 @@ export default function Navbar({ links = [] }) {
         </div>
         <span
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "sans-serif",
             fontSize: 18,
             fontWeight: 700,
             color: "var(--text-primary)",
