@@ -12,6 +12,11 @@
   --font-body: "Inter", sans-serif;
   --font-display: "Libre Baskerville", serif;
 
+  --bg-app: radial-gradient(circle at top left, rgba(201, 168, 76, 0.18) 0%, transparent 34%),
+    radial-gradient(circle at 82% 14%, rgba(59, 130, 246, 0.14) 0%, transparent 28%),
+    radial-gradient(circle at 18% 82%, rgba(236, 72, 153, 0.08) 0%, transparent 30%),
+    linear-gradient(135deg, #fffdf7 0%, #f8f4ea 44%, #eef5ff 100%);
+
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fb;
   --bg-card: #ffffff;
@@ -40,6 +45,7 @@
 }
 
 [data-theme="dark"] {
+  --bg-app: linear-gradient(180deg, #0d1117 0%, #111827 100%);
   --bg-primary: #0d1117;
   --bg-secondary: #161b22;
   --bg-card: #1c2128;
@@ -69,7 +75,8 @@
 
 body {
   font-family: var(--font-body);
-  background: var(--bg-secondary);
+  background: var(--bg-app);
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
   transition:

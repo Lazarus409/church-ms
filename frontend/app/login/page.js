@@ -30,7 +30,7 @@ export default function LoginPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "var(--bg-secondary)",
+        background: "var(--bg-app)",
         display: "flex",
         flexDirection: "column",
       }}

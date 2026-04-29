@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const t = {
-    bg: dark ? "#0a0f1e" : "#f8f7f4",
+    bg: dark ? "#0a0f1e" : "var(--bg-app)",
     text: dark ? "#fff" : "#0a0f1e",
     muted: dark ? "#94a3b8" : "#64748b",
     cardBg: dark ? "rgba(255,255,255,0.04)" : "#fff",
@@ -107,6 +107,7 @@ export default function RegisterPage() {
         justifyContent: "center",
         fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
         padding: 20,
+        backgroundAttachment: dark ? "scroll" : "fixed",
         transition: "background 0.3s",
       }}
     >

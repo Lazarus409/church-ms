@@ -35,7 +35,7 @@ export default function DashboardPage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "var(--bg-secondary)",
+          background: "var(--bg-app)",
         }}
       >
         <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
@@ -45,7 +45,7 @@ export default function DashboardPage() {
     );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-secondary)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
       <Navbar links={navLinks} />
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
         <div style={{ marginBottom: 28 }}>

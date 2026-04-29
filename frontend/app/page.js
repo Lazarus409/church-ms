@@ -6,7 +6,7 @@ export default function HomePage() {
   const [dark, setDark] = useState(true);
 
   const t = {
-    bg: dark ? "#0a0f1e" : "#f8f7f4",
+    bg: dark ? "#0a0f1e" : "var(--bg-app)",
     text: dark ? "#fff" : "#0a0f1e",
     muted: dark ? "#94a3b8" : "#64748b",
     subtle: dark ? "#64748b" : "#94a3b8",
@@ -34,6 +34,7 @@ export default function HomePage() {
         fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
         background: t.bg,
         minHeight: "100vh",
+        backgroundAttachment: dark ? "scroll" : "fixed",
         color: t.text,
         transition: "background 0.3s, color 0.3s",
       }}

@@ -73,7 +73,7 @@ export default function MembersPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-secondary)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
       <Navbar links={navLinks} />
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
         <div
