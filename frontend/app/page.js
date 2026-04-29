@@ -111,23 +111,6 @@ export default function HomePage() {
           }}
         />
 
-        <div
-          style={{
-            display: "inline-block",
-            background: "rgba(201,168,76,0.12)",
-            border: "1px solid rgba(201,168,76,0.3)",
-            borderRadius: "100px",
-            padding: "6px 16px",
-            fontSize: "13px",
-            color: "#c9a84c",
-            fontFamily: "sans-serif",
-            marginBottom: "32px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          ✦ Built for African Churches
-        </div>
-
         <h1
           style={{
             fontSize: "clamp(40px, 7vw, 80px)",
