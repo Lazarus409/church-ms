@@ -4,86 +4,76 @@ export default function HomePage() {
   return (
     <div
       style={{
-        fontFamily: "'Georgia', serif",
+        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
         background: "#0a0f1e",
         minHeight: "100vh",
-        color: "#e8e4d9",
+        color: "#fff",
       }}
     >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        .nav-link { color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-link:hover { color: #fff; }
+        .btn-primary { background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #0a0f1e; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 500; font-size: 14px; text-decoration: none; transition: background 0.2s; display: inline-block; }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
+        .feature-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 32px; transition: border-color 0.3s, transform 0.3s; }
+        .feature-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+        .gold { color: #c9a84c; }
+        .badge { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); color: #c9a84c; padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 500; display: inline-block; margin-bottom: 24px; }
+      `}</style>
+
       {/* Navbar */}
       <nav
         style={{
+          padding: "20px 40px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "20px 48px",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
+          backdropFilter: "blur(10px)",
           position: "sticky",
           top: 0,
           zIndex: 100,
-          background: "rgba(10,15,30,0.85)",
-          backdropFilter: "blur(12px)",
+          background: "rgba(10,15,30,0.8)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div
             style={{
               width: 32,
               height: 32,
-              borderRadius: "8px",
               background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
+              borderRadius: 8,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "16px",
-              fontWeight: "bold",
-              color: "#0a0f1e",
+              fontSize: 16,
             }}
           >
-            ✦
+            ✝
           </div>
           <span
             style={{
-              fontSize: "20px",
-              fontWeight: "700",
-              letterSpacing: "-0.5px",
-              color: "#fff",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 20,
+              fontWeight: 700,
             }}
           >
             ChurchMS
           </span>
         </div>
-        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <Link
-            href="/login"
-            style={{
-              color: "#a0a8b8",
-              textDecoration: "none",
-              fontSize: "14px",
-              fontFamily: "sans-serif",
-              fontWeight: 500,
-              padding: "8px 16px",
-              borderRadius: "8px",
-              transition: "color 0.2s",
-            }}
-          >
+        <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          <a href="#features" className="nav-link">
+            Features
+          </a>
+          <Link href="/login" className="nav-link">
             Sign In
           </Link>
-          <Link
-            href="/register"
-            style={{
-              background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-              color: "#0a0f1e",
-              textDecoration: "none",
-              fontSize: "14px",
-              fontFamily: "sans-serif",
-              fontWeight: "700",
-              padding: "10px 22px",
-              borderRadius: "10px",
-              letterSpacing: "0.2px",
-            }}
-          >
-            Get Started →
+          <Link href="/register" className="btn-primary">
+            Get Started Free
           </Link>
         </div>
       </nav>
@@ -92,245 +82,218 @@ export default function HomePage() {
       <section
         style={{
           textAlign: "center",
-          padding: "100px 24px 80px",
-          position: "relative",
+          padding: "100px 40px 80px",
+          maxWidth: 800,
+          margin: "0 auto",
         }}
       >
-        {/* Background glow */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -60%)",
-            width: "600px",
-            height: "400px",
-            background:
-              "radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-
+        <div className="badge">✦ Built for African Churches</div>
         <h1
           style={{
-            fontSize: "clamp(40px, 7vw, 80px)",
-            fontFamily: "'Georgia', serif",
-            fontWeight: "700",
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(40px, 6vw, 68px)",
+            fontWeight: 700,
             lineHeight: 1.1,
-            letterSpacing: "-2px",
-            marginBottom: "24px",
-            color: "#ffffff",
-            maxWidth: "800px",
-            margin: "0 auto 24px",
+            marginBottom: 24,
           }}
         >
           Manage Your Church
           <br />
-          <span style={{ color: "#c9a84c" }}>Simply & Effectively</span>
+          <span className="gold">Simply & Effectively</span>
         </h1>
-
         <p
           style={{
-            fontSize: "18px",
-            color: "#7a8299",
-            maxWidth: "520px",
-            margin: "0 auto 48px",
+            fontSize: 18,
+            color: "#94a3b8",
             lineHeight: 1.7,
-            fontFamily: "sans-serif",
-            fontWeight: 400,
+            maxWidth: 560,
+            margin: "0 auto 40px",
           }}
         >
           Track members, record attendance, and get powerful insights — all in
-          one beautiful platform built for churches.
+          one beautiful platform built for churches of every size.
         </p>
-
         <div
           style={{
             display: "flex",
-            gap: "16px",
+            gap: 16,
             justifyContent: "center",
             flexWrap: "wrap",
           }}
         >
-          <Link
-            href="/register"
-            style={{
-              background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-              color: "#0a0f1e",
-              textDecoration: "none",
-              fontSize: "16px",
-              fontFamily: "sans-serif",
-              fontWeight: "700",
-              padding: "16px 36px",
-              borderRadius: "12px",
-              letterSpacing: "0.2px",
-            }}
-          >
+          <Link href="/register" className="btn-primary">
             Start for Free →
           </Link>
-          <Link
-            href="/login"
-            style={{
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "#e8e4d9",
-              textDecoration: "none",
-              fontSize: "16px",
-              fontFamily: "sans-serif",
-              fontWeight: 500,
-              padding: "16px 36px",
-              borderRadius: "12px",
-              background: "rgba(255,255,255,0.04)",
-            }}
-          >
+          <Link href="/login" className="btn-outline">
             Sign In
           </Link>
         </div>
+        <p style={{ marginTop: 20, fontSize: 13, color: "#475569" }}>
+          No credit card required · Free to get started
+        </p>
       </section>
 
-      {/* Stats bar */}
+      {/* Mock Dashboard Preview */}
       <section
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "64px",
-          padding: "40px 24px",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          flexWrap: "wrap",
-        }}
+        style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 40px" }}
       >
-        {[
-          { value: "100%", label: "Free to Start" },
-          { value: "3", label: "Core Features" },
-          { value: "∞", label: "Members Supported" },
-          { value: "24/7", label: "Always Online" },
-        ].map((s) => (
-          <div key={s.label} style={{ textAlign: "center" }}>
-            <div
-              style={{
-                fontSize: "32px",
-                fontWeight: "700",
-                color: "#c9a84c",
-                letterSpacing: "-1px",
-                fontFamily: "'Georgia', serif",
-              }}
-            >
-              {s.value}
-            </div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#7a8299",
-                fontFamily: "sans-serif",
-                marginTop: "4px",
-              }}
-            >
-              {s.label}
-            </div>
+        <div
+          style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 20,
+            padding: 24,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 1,
+              background:
+                "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
+            }}
+          />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 12,
+              marginBottom: 16,
+            }}
+          >
+            {[
+              ["Total Members", "248", "+12%"],
+              ["Active Members", "231", "+8%"],
+              ["Services", "8", "this month"],
+              ["Attendance", "87%", "+5%"],
+            ].map(([label, val, change]) => (
+              <div
+                key={label}
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12,
+                  padding: "16px 20px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 11,
+                    color: "#64748b",
+                    marginBottom: 8,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  {label}
+                </p>
+                <p style={{ fontSize: 24, fontWeight: 600, marginBottom: 4 }}>
+                  {val}
+                </p>
+                <p style={{ fontSize: 12, color: "#c9a84c" }}>{change}</p>
+              </div>
+            ))}
           </div>
-        ))}
+          <div
+            style={{
+              background: "rgba(255,255,255,0.02)",
+              borderRadius: 12,
+              padding: "16px 20px",
+              border: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            {[
+              ["Sunday Service", "Apr 27", "142 present"],
+              ["Bible Study", "Apr 24", "67 present"],
+              ["Youth Service", "Apr 21", "89 present"],
+            ].map(([name, date, count]) => (
+              <div
+                key={name}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "10px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.04)",
+                  fontSize: 13,
+                }}
+              >
+                <span style={{ color: "#cbd5e1" }}>{name}</span>
+                <span style={{ color: "#64748b" }}>{date}</span>
+                <span style={{ color: "#c9a84c" }}>{count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Features */}
       <section
-        style={{ padding: "100px 24px", maxWidth: "1100px", margin: "0 auto" }}
+        id="features"
+        style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 40px" }}
       >
-        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <div className="badge">Features</div>
           <h2
             style={{
-              fontSize: "clamp(28px, 4vw, 44px)",
-              fontWeight: "700",
-              letterSpacing: "-1px",
-              color: "#fff",
-              marginBottom: "16px",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(28px, 4vw, 40px)",
+              fontWeight: 700,
             }}
           >
             Everything your church needs
           </h2>
-          <p
-            style={{
-              color: "#7a8299",
-              fontSize: "16px",
-              fontFamily: "sans-serif",
-            }}
-          >
-            No complexity. Just the tools that matter.
-          </p>
         </div>
-
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "24px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 20,
           }}
         >
           {[
             {
               icon: "👥",
               title: "Member Management",
-              desc: "Add, search, and manage all your church members. Track who's active, who's new, and never lose a contact again.",
-              color: "#3b82f6",
+              desc: "Add, search, and manage all your church members. Track who's active, who's new, and who needs follow-up.",
             },
             {
               icon: "📋",
               title: "Attendance Tracking",
-              desc: "Mark attendance for every service in seconds. Spot patterns, identify absent members, and follow up automatically.",
-              color: "#c9a84c",
+              desc: "Mark attendance for every service in seconds. Bulk check-in and individual tracking supported.",
             },
             {
               icon: "📊",
               title: "Dashboard & Reports",
-              desc: "Beautiful visual reports showing your church's growth, attendance trends, and member activity — updated in real time.",
-              color: "#22c55e",
+              desc: "Beautiful analytics showing growth, attendance trends, and member activity over time.",
             },
-          ].map((f) => (
-            <div
-              key={f.title}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "20px",
-                padding: "36px",
-                transition: "border-color 0.2s",
-              }}
-            >
-              <div
-                style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: "14px",
-                  background: `${f.color}18`,
-                  border: `1px solid ${f.color}30`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "24px",
-                  marginBottom: "24px",
-                }}
-              >
-                {f.icon}
-              </div>
-              <h3
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  color: "#fff",
-                  marginBottom: "12px",
-                  letterSpacing: "-0.3px",
-                }}
-              >
-                {f.title}
+            {
+              icon: "🏛️",
+              title: "Multi-Church Ready",
+              desc: "Built to support multiple churches. Each church sees only their own data — completely isolated.",
+            },
+            {
+              icon: "🔐",
+              title: "Role-Based Access",
+              desc: "Admin, pastor, and worker roles. Control who can see and edit what in your system.",
+            },
+            {
+              icon: "📱",
+              title: "Works Everywhere",
+              desc: "Access from any device — phone, tablet, or desktop. No app download needed.",
+            },
+          ].map(({ icon, title, desc }) => (
+            <div key={title} className="feature-card">
+              <div style={{ fontSize: 28, marginBottom: 16 }}>{icon}</div>
+              <h3 style={{ fontSize: 17, fontWeight: 600, marginBottom: 10 }}>
+                {title}
               </h3>
-              <p
-                style={{
-                  color: "#7a8299",
-                  fontSize: "15px",
-                  lineHeight: 1.7,
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {f.desc}
+              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6 }}>
+                {desc}
               </p>
             </div>
           ))}
@@ -338,54 +301,24 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section
-        style={{
-          margin: "0 24px 80px",
-          maxWidth: "900px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          background:
-            "linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04))",
-          border: "1px solid rgba(201,168,76,0.2)",
-          borderRadius: "28px",
-          padding: "72px 48px",
-          textAlign: "center",
-        }}
-      >
+      <section style={{ textAlign: "center", padding: "60px 40px 80px" }}>
         <h2
           style={{
+            fontFamily: "'Playfair Display', serif",
             fontSize: "clamp(28px, 4vw, 44px)",
-            fontWeight: "700",
-            letterSpacing: "-1px",
-            color: "#fff",
-            marginBottom: "16px",
+            fontWeight: 700,
+            marginBottom: 16,
           }}
         >
           Ready to get started?
         </h2>
-        <p
-          style={{
-            color: "#7a8299",
-            fontSize: "16px",
-            fontFamily: "sans-serif",
-            marginBottom: "36px",
-          }}
-        >
-          Join churches already using ChurchMS. Free to start, no credit card
-          required.
+        <p style={{ color: "#64748b", fontSize: 16, marginBottom: 32 }}>
+          Register your church in under 2 minutes. Free forever to start.
         </p>
         <Link
           href="/register"
-          style={{
-            background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-            color: "#0a0f1e",
-            textDecoration: "none",
-            fontSize: "16px",
-            fontFamily: "sans-serif",
-            fontWeight: "700",
-            padding: "16px 40px",
-            borderRadius: "12px",
-          }}
+          className="btn-primary"
+          style={{ fontSize: 16, padding: "14px 36px" }}
         >
           Register Your Church Free →
         </Link>
@@ -395,50 +328,39 @@ export default function HomePage() {
       <footer
         style={{
           borderTop: "1px solid rgba(255,255,255,0.06)",
-          padding: "32px 48px",
+          padding: "24px 40px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          flexWrap: "wrap",
-          gap: "16px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <div
-            style={{
-              width: 24,
-              height: 24,
-              borderRadius: "6px",
-              background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "12px",
-              color: "#0a0f1e",
-              fontWeight: "bold",
-            }}
-          >
-            ✦
-          </div>
-          <span
-            style={{
-              color: "#7a8299",
-              fontSize: "14px",
-              fontFamily: "sans-serif",
-            }}
-          >
-            © 2026 ChurchMS
-          </span>
-        </div>
         <span
           style={{
-            color: "#4a5568",
-            fontSize: "13px",
-            fontFamily: "sans-serif",
+            fontFamily: "'Playfair Display', serif",
+            color: "#c9a84c",
+            fontSize: 16,
+            fontWeight: 700,
           }}
         >
-          Built for churches everywhere.
+          ChurchMS
         </span>
+        <span style={{ color: "#334155", fontSize: 13 }}>
+          © 2026 ChurchMS. Built for churches everywhere.
+        </span>
+        <div style={{ display: "flex", gap: 20 }}>
+          <Link
+            href="/login"
+            style={{ color: "#475569", fontSize: 13, textDecoration: "none" }}
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/register"
+            style={{ color: "#475569", fontSize: 13, textDecoration: "none" }}
+          >
+            Register
+          </Link>
+        </div>
       </footer>
     </div>
   );
