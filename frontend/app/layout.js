@@ -1,6 +1,4 @@
-/* eslint-disable @next/next/no-page-custom-font */
 import "./globals.css";
-import BrandingBootstrap from "@/components/BrandingBootstrap";
 
 export const metadata = {
   title: "ChurchMS",
@@ -22,10 +20,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
-        <BrandingBootstrap />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

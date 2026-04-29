@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Members", href: "/members" },
-  { label: "Settings", href: "/settings" },
 ];
 
 export default function AttendancePage() {
@@ -41,9 +40,7 @@ export default function AttendancePage() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchServices();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchMembers();
   }, []);
 

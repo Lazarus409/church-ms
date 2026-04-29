@@ -1,30 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { BRANDING_EVENT, getActiveBranding } from "@/lib/branding";
 
 export default function Navbar({ links = [] }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [branding, setBranding] = useState(getActiveBranding());
-
-  useEffect(() => {
-    const syncBranding = () => {
-      setBranding(getActiveBranding());
-    };
-
-    syncBranding();
-    window.addEventListener(BRANDING_EVENT, syncBranding);
-    window.addEventListener("storage", syncBranding);
-
-    return () => {
-      window.removeEventListener(BRANDING_EVENT, syncBranding);
-      window.removeEventListener("storage", syncBranding);
-    };
-  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -60,7 +43,7 @@ export default function Navbar({ links = [] }) {
             fontWeight: 700,
           }}
         >
-          {branding.logoMark || "C"}
+          ✝
         </div>
         <span
           style={{
@@ -70,7 +53,7 @@ export default function Navbar({ links = [] }) {
             color: "var(--text-primary)",
           }}
         >
-          {branding.brandName || "ChurchMS"}
+          ChurchMS
         </span>
       </Link>
 
@@ -81,7 +64,7 @@ export default function Navbar({ links = [] }) {
         aria-expanded={menuOpen}
         aria-label="Toggle navigation menu"
       >
-        {menuOpen ? "x" : "Menu"}
+        {menuOpen ? "✕" : "☰"}
       </button>
 
       <div className="app-navbar__desktop">
