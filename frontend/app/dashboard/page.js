@@ -37,6 +37,7 @@ export default function DashboardPage() {
           justifyContent: "center",
           background: "var(--bg-app)",
         }}
+        className="page-shell"
       >
         <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
           Loading dashboard...
@@ -45,9 +46,9 @@ export default function DashboardPage() {
     );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
       <Navbar links={navLinks} />
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
+      <div className="page-content">
         <div style={{ marginBottom: 28 }}>
           <h1
             style={{
@@ -165,68 +166,70 @@ export default function DashboardPage() {
               No attendance data yet.
             </div>
           ) : (
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr style={{ background: "var(--bg-secondary)" }}>
-                  {["Service", "Date", "Present"].map((h) => (
-                    <th
-                      key={h}
-                      style={{
-                        padding: "12px 24px",
-                        textAlign: "left",
-                        fontSize: 12,
-                        fontWeight: 500,
-                        color: "var(--text-muted)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.05em",
-                      }}
-                    >
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {stats.attendance_trend.map((row, i) => (
-                  <tr key={i} style={{ borderTop: "1px solid var(--border)" }}>
-                    <td
-                      style={{
-                        padding: "14px 24px",
-                        fontSize: 14,
-                        color: "var(--text-primary)",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {row.service}
-                    </td>
-                    <td
-                      style={{
-                        padding: "14px 24px",
-                        fontSize: 14,
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {row.date}
-                    </td>
-                    <td style={{ padding: "14px 24px" }}>
-                      <span
+            <div className="table-scroll">
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ background: "var(--bg-secondary)" }}>
+                    {["Service", "Date", "Present"].map((h) => (
+                      <th
+                        key={h}
                         style={{
-                          background: "var(--gold-bg)",
-                          color: "var(--gold)",
-                          border: "1px solid var(--gold-border)",
-                          padding: "3px 10px",
-                          borderRadius: 100,
-                          fontSize: 13,
+                          padding: "12px 24px",
+                          textAlign: "left",
+                          fontSize: 12,
+                          fontWeight: 500,
+                          color: "var(--text-muted)",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {stats.attendance_trend.map((row, i) => (
+                    <tr key={i} style={{ borderTop: "1px solid var(--border)" }}>
+                      <td
+                        style={{
+                          padding: "14px 24px",
+                          fontSize: 14,
+                          color: "var(--text-primary)",
                           fontWeight: 500,
                         }}
                       >
-                        {row.present}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        {row.service}
+                      </td>
+                      <td
+                        style={{
+                          padding: "14px 24px",
+                          fontSize: 14,
+                          color: "var(--text-secondary)",
+                        }}
+                      >
+                        {row.date}
+                      </td>
+                      <td style={{ padding: "14px 24px" }}>
+                        <span
+                          style={{
+                            background: "var(--gold-bg)",
+                            color: "var(--gold)",
+                            border: "1px solid var(--gold-border)",
+                            padding: "3px 10px",
+                            borderRadius: 100,
+                            fontSize: 13,
+                            fontWeight: 500,
+                          }}
+                        >
+                          {row.present}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

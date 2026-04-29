@@ -73,17 +73,10 @@ export default function MembersPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
       <Navbar links={navLinks} />
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginBottom: 24,
-          }}
-        >
+      <div className="page-content">
+        <div className="page-header">
           <div>
             <h1
               style={{
@@ -100,22 +93,24 @@ export default function MembersPage() {
               {members.length} total members
             </p>
           </div>
-          <button
-            onClick={() => setShowForm(!showForm)}
-            style={{
-              background: "var(--gold)",
-              border: "none",
-              borderRadius: 8,
-              padding: "10px 20px",
-              color: "#fff",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            + Add Member
-          </button>
+          <div className="page-header__actions">
+            <button
+              onClick={() => setShowForm(!showForm)}
+              style={{
+                background: "var(--gold)",
+                border: "none",
+                borderRadius: 8,
+                padding: "10px 20px",
+                color: "#fff",
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              + Add Member
+            </button>
+          </div>
         </div>
 
         {/* Search */}
@@ -160,14 +155,7 @@ export default function MembersPage() {
             >
               New Member
             </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 12,
-                marginBottom: 16,
-              }}
-            >
+            <div style={{ marginBottom: 16 }} className="responsive-grid-2">
               {[
                 ["full_name", "Full name", "text"],
                 ["phone", "Phone number", "text"],
@@ -212,7 +200,7 @@ export default function MembersPage() {
                 }}
               />
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div style={{ display: "flex", gap: 10 }} className="stack-actions">
               <button
                 onClick={handleAdd}
                 disabled={saving}
@@ -283,6 +271,7 @@ export default function MembersPage() {
               No members yet. Add your first member above.
             </div>
           ) : (
+            <div className="table-scroll">
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ background: "var(--bg-secondary)" }}>
@@ -415,6 +404,7 @@ export default function MembersPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </div>
       </div>

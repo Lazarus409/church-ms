@@ -83,17 +83,10 @@ export default function AttendancePage() {
   ).length;
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
       <Navbar links={navLinks} />
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginBottom: 24,
-          }}
-        >
+      <div className="page-content" style={{ maxWidth: 900 }}>
+        <div className="page-header">
           <div>
             <h1
               style={{
@@ -110,22 +103,24 @@ export default function AttendancePage() {
               Select a service and mark attendance
             </p>
           </div>
-          <button
-            onClick={() => setShowServiceForm(!showServiceForm)}
-            style={{
-              background: "var(--gold)",
-              border: "none",
-              borderRadius: 8,
-              padding: "10px 20px",
-              color: "#fff",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            + New Service
-          </button>
+          <div className="page-header__actions">
+            <button
+              onClick={() => setShowServiceForm(!showServiceForm)}
+              style={{
+                background: "var(--gold)",
+                border: "none",
+                borderRadius: 8,
+                padding: "10px 20px",
+                color: "#fff",
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              + New Service
+            </button>
+          </div>
         </div>
 
         {/* Service Form */}
@@ -150,14 +145,7 @@ export default function AttendancePage() {
             >
               Create Service
             </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 12,
-                marginBottom: 16,
-              }}
-            >
+            <div style={{ marginBottom: 16 }} className="responsive-grid-2">
               <input
                 placeholder="Service name"
                 value={serviceForm.name}
@@ -196,7 +184,7 @@ export default function AttendancePage() {
                 }}
               />
             </div>
-            <div style={{ display: "flex", gap: 10 }}>
+            <div style={{ display: "flex", gap: 10 }} className="stack-actions">
               <button
                 onClick={handleCreateService}
                 disabled={saving}
@@ -341,6 +329,7 @@ export default function AttendancePage() {
                     padding: "12px 24px",
                     borderBottom: "1px solid var(--border)",
                   }}
+                  className="attendance-member-row"
                 >
                   <div
                     style={{ display: "flex", alignItems: "center", gap: 10 }}
@@ -372,7 +361,7 @@ export default function AttendancePage() {
                       {m.full_name}
                     </span>
                   </div>
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <div style={{ display: "flex", gap: 8 }} className="attendance-member-actions">
                     {["present", "absent"].map((status) => (
                       <button
                         key={status}

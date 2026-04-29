@@ -46,6 +46,89 @@ export default function HomePage() {
         .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
         .feature-card { border-radius: 16px; padding: 32px; transition: border-color 0.3s, transform 0.3s; }
         .feature-card:hover { transform: translateY(-4px); }
+        .home-preview-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+        .home-features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 20px;
+        }
+        @media (max-width: 900px) {
+          .home-nav {
+            padding: 16px 20px;
+            flex-wrap: wrap;
+          }
+          .home-nav-actions {
+            width: 100%;
+            justify-content: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+          .home-nav-actions .btn-primary {
+            margin-top: 4px;
+          }
+        }
+        @media (max-width: 768px) {
+          .home-hero {
+            padding: 72px 20px 56px;
+          }
+          .home-hero h1 {
+            font-size: clamp(34px, 12vw, 48px);
+          }
+          .home-hero-actions {
+            width: 100%;
+          }
+          .home-hero-actions > * {
+            width: 100%;
+          }
+          .home-preview {
+            padding: 0 16px;
+            margin-bottom: 56px;
+          }
+          .home-preview-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+          .home-features {
+            padding: 0 16px;
+          }
+          .home-footer {
+            padding: 20px 16px 28px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+        }
+        @media (max-width: 540px) {
+          .home-nav-actions {
+            gap: 10px;
+          }
+          .home-nav-actions .btn-primary {
+            width: 100%;
+            text-align: center;
+          }
+          .home-hero {
+            padding: 64px 16px 48px;
+          }
+          .home-hero-actions {
+            flex-direction: column;
+          }
+          .home-hero-actions > * {
+            width: 100%;
+          }
+          .home-preview-grid {
+            grid-template-columns: 1fr;
+          }
+          .home-preview-grid > div {
+            padding: 14px 16px;
+          }
+          .home-features-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
 
       {/* Navbar */}
@@ -62,6 +145,7 @@ export default function HomePage() {
           zIndex: 100,
           background: t.navBg,
         }}
+        className="home-nav"
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div
@@ -89,7 +173,7 @@ export default function HomePage() {
             ChurchMS
           </span>
         </div>
-        <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 24, alignItems: "center" }} className="home-nav-actions">
           <a
             href="#features"
             style={{
@@ -147,6 +231,7 @@ export default function HomePage() {
           maxWidth: 800,
           margin: "0 auto",
         }}
+        className="home-hero"
       >
         <h1
           style={{
@@ -181,6 +266,7 @@ export default function HomePage() {
             justifyContent: "center",
             flexWrap: "wrap",
           }}
+          className="home-hero-actions"
         >
           <Link href="/register" className="btn-primary">
             Start for Free →
@@ -209,6 +295,7 @@ export default function HomePage() {
       {/* Mock Dashboard Preview */}
       <section
         style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 40px" }}
+        className="home-preview"
       >
         <div
           style={{
@@ -231,14 +318,9 @@ export default function HomePage() {
                 "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
             }}
           />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 12,
-              marginBottom: 16,
-            }}
-          >
+        <div
+          className="home-preview-grid"
+        >
             {[
               ["Total Members", "248", "+12%"],
               ["Active Members", "231", "+8%"],
@@ -315,6 +397,7 @@ export default function HomePage() {
       <section
         id="features"
         style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 40px" }}
+        className="home-features"
       >
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <div
@@ -343,13 +426,7 @@ export default function HomePage() {
             Everything your church needs
           </h2>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 20,
-          }}
-        >
+        <div className="home-features-grid">
           {[
             {
               icon: "👥",
@@ -443,6 +520,7 @@ export default function HomePage() {
           justifyContent: "space-between",
           alignItems: "center",
         }}
+        className="home-footer"
       >
         <span
           style={{

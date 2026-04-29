@@ -31,18 +31,10 @@ export default function LoginPage() {
       style={{
         minHeight: "100vh",
         background: "var(--bg-app)",
-        display: "flex",
-        flexDirection: "column",
       }}
+      className="auth-shell"
     >
-      <div
-        style={{
-          padding: "16px 32px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className="auth-topbar">
         <Link
           href="/"
           style={{
@@ -81,16 +73,8 @@ export default function LoginPage() {
         <ThemeToggle />
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "40px 16px",
-        }}
-      >
-        <div style={{ width: "100%", maxWidth: 420 }}>
+      <div className="auth-content">
+        <div className="auth-card">
           <div style={{ textAlign: "center", marginBottom: 32 }}>
             <h1
               style={{

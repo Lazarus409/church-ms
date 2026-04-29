@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar({ links = [] }) {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -16,25 +18,15 @@ export default function Navbar({ links = [] }) {
       style={{
         background: "var(--bg-nav)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid var(--border)",
-        padding: "0 32px",
-        height: 60,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
       }}
+      className="app-navbar"
     >
       <Link
         href="/"
         style={{
           textDecoration: "none",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
         }}
+        className="app-navbar__brand"
       >
         <div
           style={{
@@ -64,7 +56,17 @@ export default function Navbar({ links = [] }) {
         </span>
       </Link>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <button
+        type="button"
+        className="app-navbar__menuButton"
+        onClick={() => setMenuOpen((open) => !open)}
+        aria-expanded={menuOpen}
+        aria-label="Toggle navigation menu"
+      >
+        {menuOpen ? "✕" : "☰"}
+      </button>
+
+      <div className="app-navbar__desktop">
         {links.map(({ label, href }) => (
           <Link
             key={href}
@@ -82,7 +84,9 @@ export default function Navbar({ links = [] }) {
             {label}
           </Link>
         ))}
-        <ThemeToggle />
+        <div className="theme-toggle">
+          <ThemeToggle />
+        </div>
         {links.length > 0 && (
           <button
             onClick={logout}
@@ -101,6 +105,53 @@ export default function Navbar({ links = [] }) {
           </button>
         )}
       </div>
+
+      {menuOpen && (
+        <div className="app-navbar__mobilePanel">
+          {links.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: "var(--text-secondary)",
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: 500,
+                padding: "10px 12px",
+                borderRadius: 8,
+                transition: "all 0.2s",
+                border: "1px solid var(--border)",
+                background: "var(--bg-card)",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+          <div className="theme-toggle">
+            <ThemeToggle />
+          </div>
+          {links.length > 0 && (
+            <button
+              onClick={logout}
+              style={{
+                background: "none",
+                border: "1px solid var(--border)",
+                borderRadius: 8,
+                padding: "10px 14px",
+                fontSize: 14,
+                color: "var(--danger)",
+                cursor: "pointer",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      )}
     </nav>
   );
 }

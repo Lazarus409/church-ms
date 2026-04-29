@@ -110,11 +110,40 @@ export default function RegisterPage() {
         backgroundAttachment: dark ? "scroll" : "fixed",
         transition: "background 0.3s",
       }}
+      className="register-shell"
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: ${t.inputPlaceholder}; }
+        @media (max-width: 640px) {
+          .register-shell {
+            padding: 16px;
+            align-items: flex-start;
+          }
+          .register-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+          }
+          .register-header button {
+            align-self: flex-end;
+          }
+          .register-title h1 {
+            font-size: 26px;
+          }
+          .register-card {
+            padding: 22px 18px;
+            border-radius: 18px;
+          }
+          .register-actions {
+            flex-direction: column;
+          }
+          .register-actions button {
+            width: 100%;
+          }
+        }
       `}</style>
 
       {/* Background glow */}
@@ -171,6 +200,7 @@ export default function RegisterPage() {
             alignItems: "center",
             marginBottom: 32,
           }}
+          className="register-header"
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div
@@ -216,7 +246,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Title */}
-        <div style={{ marginBottom: 28 }}>
+        <div style={{ marginBottom: 28 }} className="register-title">
           <h1
             style={{
               fontFamily: "sans-serif",
@@ -242,6 +272,7 @@ export default function RegisterPage() {
             padding: "32px",
             backdropFilter: "blur(10px)",
           }}
+          className="register-card"
         >
           {error && (
             <div
@@ -358,6 +389,7 @@ export default function RegisterPage() {
                 gridTemplateColumns: "1fr 1fr",
                 gap: 12,
               }}
+              className="responsive-grid-2"
             >
               <Field
                 label="Password"

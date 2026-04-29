@@ -20,6 +20,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
+      className="theme-toggle"
       style={{
         background: "var(--gold-bg)",
         border: "1px solid var(--gold-border)",

@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 :root {
   --font-body: "Inter", sans-serif;
   --font-display: "Libre Baskerville", serif;
@@ -88,4 +92,246 @@ input,
 textarea,
 select {
   font-family: var(--font-body);
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stack-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  min-width: 640px;
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-topbar {
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.auth-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.app-navbar {
+  background: var(--bg-nav);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 16px;
+}
+
+.app-navbar__brand {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.app-navbar__desktop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-navbar__menuButton {
+  display: none;
+}
+
+.app-navbar__mobilePanel {
+  display: none;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 900px) {
+  .page-content {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-navbar {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .app-navbar__desktop {
+    display: none;
+  }
+
+  .app-navbar__menuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .app-navbar__mobilePanel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+
+  .app-navbar__mobilePanel a,
+  .app-navbar__mobilePanel button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .responsive-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-shell {
+    min-height: 100svh;
+  }
+
+  .page-content {
+    padding: 24px 16px 32px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-header__actions {
+    width: 100%;
+  }
+
+  .page-header__actions > * {
+    flex: 1 1 auto;
+  }
+
+  .page-header__actions button {
+    width: 100%;
+  }
+
+  .stack-actions {
+    flex-direction: column;
+  }
+
+  .stack-actions button {
+    width: 100%;
+  }
+
+  .auth-topbar {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-content {
+    padding: 24px 16px 32px;
+    align-items: flex-start;
+  }
+
+  .auth-card {
+    max-width: 100%;
+  }
+
+  .theme-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .table-scroll table {
+    min-width: 560px;
+  }
+
+  .attendance-member-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .attendance-member-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .attendance-member-actions button {
+    flex: 1 1 0;
+  }
 }
