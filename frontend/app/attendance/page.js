@@ -2,6 +2,12 @@
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
+
+const navLinks = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Members", href: "/members" },
+];
 
 export default function AttendancePage() {
   const router = useRouter();
@@ -72,53 +78,102 @@ export default function AttendancePage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="bg-white shadow px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-700">ChurchMS</h1>
-        <div className="flex gap-4">
-          <a href="/dashboard" className="text-gray-600 hover:text-blue-600">
-            Dashboard
-          </a>
-          <a href="/members" className="text-gray-600 hover:text-blue-600">
-            Members
-          </a>
-          <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              router.push("/login");
-            }}
-            className="text-red-500 hover:text-red-700"
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
+  const presentCount = Object.values(attendance).filter(
+    (v) => v === "present",
+  ).length;
 
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Attendance</h2>
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg-secondary)" }}>
+      <Navbar links={navLinks} />
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: 24,
+          }}
+        >
+          <div>
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 26,
+                fontWeight: 700,
+                color: "var(--text-primary)",
+                marginBottom: 4,
+              }}
+            >
+              Attendance
+            </h1>
+            <p style={{ color: "var(--text-secondary)", fontSize: 14 }}>
+              Select a service and mark attendance
+            </p>
+          </div>
           <button
-            onClick={() => setShowServiceForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            onClick={() => setShowServiceForm(!showServiceForm)}
+            style={{
+              background: "var(--gold)",
+              border: "none",
+              borderRadius: 8,
+              padding: "10px 20px",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "var(--font-body)",
+            }}
           >
             + New Service
           </button>
         </div>
 
-        {/* New Service Form */}
+        {/* Service Form */}
         {showServiceForm && (
-          <div className="bg-white rounded-2xl shadow p-6 mb-6">
-            <h3 className="text-lg font-semibold mb-4">Create Service</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            style={{
+              background: "var(--bg-card)",
+              border: "1px solid var(--gold-border)",
+              borderRadius: 16,
+              padding: 24,
+              marginBottom: 20,
+              boxShadow: "var(--shadow-md)",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                marginBottom: 16,
+              }}
+            >
+              Create Service
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 12,
+                marginBottom: 16,
+              }}
+            >
               <input
-                placeholder="Service name (e.g. Sunday Service)"
+                placeholder="Service name"
                 value={serviceForm.name}
                 onChange={(e) =>
                   setServiceForm({ ...serviceForm, name: e.target.value })
                 }
-                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  padding: "10px 14px",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  fontSize: 14,
+                  fontFamily: "var(--font-body)",
+                  outline: "none",
+                }}
               />
               <input
                 type="date"
@@ -129,20 +184,48 @@ export default function AttendancePage() {
                     scheduled_date: e.target.value,
                   })
                 }
-                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  padding: "10px 14px",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  fontSize: 14,
+                  fontFamily: "var(--font-body)",
+                  outline: "none",
+                }}
               />
             </div>
-            <div className="flex gap-3 mt-4">
+            <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={handleCreateService}
                 disabled={saving}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                style={{
+                  background: "var(--gold)",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  color: "#fff",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-body)",
+                }}
               >
-                {saving ? "Saving..." : "Create Service"}
+                {saving ? "Creating..." : "Create Service"}
               </button>
               <button
                 onClick={() => setShowServiceForm(false)}
-                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300"
+                style={{
+                  background: "none",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  color: "var(--text-secondary)",
+                  fontSize: 14,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-body)",
+                }}
               >
                 Cancel
               </button>
@@ -151,21 +234,64 @@ export default function AttendancePage() {
         )}
 
         {/* Select Service */}
-        <div className="bg-white rounded-2xl shadow p-6 mb-6">
-          <h3 className="text-lg font-semibold mb-4">Select Service</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 20,
+            boxShadow: "var(--shadow-sm)",
+          }}
+        >
+          <h3
+            style={{
+              fontSize: 15,
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              marginBottom: 16,
+            }}
+          >
+            Select Service
+          </h3>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gap: 12,
+            }}
+          >
             {services.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setSelectedService(s.id)}
-                className={`p-4 rounded-xl border-2 text-left transition ${
-                  selectedService === s.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-blue-300"
-                }`}
+                style={{
+                  padding: "14px 16px",
+                  borderRadius: 10,
+                  border: `2px solid ${selectedService === s.id ? "var(--gold)" : "var(--border)"}`,
+                  background:
+                    selectedService === s.id
+                      ? "var(--gold-bg)"
+                      : "var(--bg-secondary)",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  transition: "all 0.2s",
+                  fontFamily: "var(--font-body)",
+                }}
               >
-                <p className="font-medium">{s.name}</p>
-                <p className="text-sm text-gray-500">{s.scheduled_date}</p>
+                <p
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "var(--text-primary)",
+                    marginBottom: 4,
+                  }}
+                >
+                  {s.name}
+                </p>
+                <p style={{ fontSize: 12, color: "var(--text-muted)" }}>
+                  {s.scheduled_date}
+                </p>
               </button>
             ))}
           </div>
@@ -173,51 +299,153 @@ export default function AttendancePage() {
 
         {/* Mark Attendance */}
         {members.length > 0 && (
-          <div className="bg-white rounded-2xl shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">Mark Attendance</h3>
-            <div className="space-y-3">
+          <div
+            style={{
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
+              borderRadius: 16,
+              overflow: "hidden",
+              boxShadow: "var(--shadow-sm)",
+            }}
+          >
+            <div
+              style={{
+                padding: "16px 24px",
+                borderBottom: "1px solid var(--border)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: 15,
+                  fontWeight: 600,
+                  color: "var(--text-primary)",
+                }}
+              >
+                Mark Attendance
+              </h3>
+              <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                {presentCount} of {members.length} present
+              </span>
+            </div>
+            <div style={{ padding: "8px 0" }}>
               {members.map((m) => (
                 <div
                   key={m.id}
-                  className="flex items-center justify-between border-b pb-3"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "12px 24px",
+                    borderBottom: "1px solid var(--border)",
+                  }}
                 >
-                  <span className="font-medium">{m.full_name}</span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() =>
-                        setAttendance({ ...attendance, [m.id]: "present" })
-                      }
-                      className={`px-4 py-1 rounded-full text-sm font-medium transition ${
-                        attendance[m.id] === "present"
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-green-100"
-                      }`}
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: 10 }}
+                  >
+                    <div
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        background: "var(--gold-bg)",
+                        border: "1px solid var(--gold-border)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: "var(--gold)",
+                      }}
                     >
-                      Present
-                    </button>
-                    <button
-                      onClick={() =>
-                        setAttendance({ ...attendance, [m.id]: "absent" })
-                      }
-                      className={`px-4 py-1 rounded-full text-sm font-medium transition ${
-                        attendance[m.id] === "absent"
-                          ? "bg-red-500 text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-red-100"
-                      }`}
+                      {m.full_name.charAt(0)}
+                    </div>
+                    <span
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 500,
+                        color: "var(--text-primary)",
+                      }}
                     >
-                      Absent
-                    </button>
+                      {m.full_name}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    {["present", "absent"].map((status) => (
+                      <button
+                        key={status}
+                        onClick={() =>
+                          setAttendance({ ...attendance, [m.id]: status })
+                        }
+                        style={{
+                          padding: "6px 16px",
+                          borderRadius: 6,
+                          border: "none",
+                          cursor: "pointer",
+                          fontSize: 13,
+                          fontWeight: 500,
+                          fontFamily: "var(--font-body)",
+                          transition: "all 0.15s",
+                          background:
+                            attendance[m.id] === status
+                              ? status === "present"
+                                ? "rgba(22,163,74,0.15)"
+                                : "rgba(220,38,38,0.15)"
+                              : "var(--bg-secondary)",
+                          color:
+                            attendance[m.id] === status
+                              ? status === "present"
+                                ? "var(--success)"
+                                : "var(--danger)"
+                              : "var(--text-muted)",
+                          outline:
+                            attendance[m.id] === status
+                              ? `1px solid ${status === "present" ? "rgba(22,163,74,0.3)" : "rgba(220,38,38,0.3)"}`
+                              : "none",
+                        }}
+                      >
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                      </button>
+                    ))}
                   </div>
                 </div>
               ))}
             </div>
-            <button
-              onClick={handleMarkAttendance}
-              disabled={saving}
-              className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save Attendance"}
-            </button>
+            <div style={{ padding: 20 }}>
+              <button
+                onClick={handleMarkAttendance}
+                disabled={saving || !selectedService}
+                style={{
+                  width: "100%",
+                  padding: 13,
+                  background: "var(--gold)",
+                  border: "none",
+                  borderRadius: 10,
+                  color: "#fff",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-body)",
+                  opacity: saving || !selectedService ? 0.6 : 1,
+                }}
+              >
+                {saving ? "Saving..." : "Save Attendance"}
+              </button>
+              {!selectedService && (
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    color: "var(--text-muted)",
+                    marginTop: 8,
+                  }}
+                >
+                  Select a service above to save attendance
+                </p>
+              )}
+            </div>
           </div>
         )}
       </div>

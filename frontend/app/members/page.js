@@ -2,6 +2,12 @@
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
+
+const navLinks = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Attendance", href: "/attendance" },
+];
 
 export default function MembersPage() {
   const router = useRouter();
@@ -53,7 +59,7 @@ export default function MembersPage() {
         date_joined: "",
       });
       fetchMembers();
-    } catch (err) {
+    } catch {
       alert("Error adding member");
     } finally {
       setSaving(false);
@@ -67,35 +73,46 @@ export default function MembersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="bg-white shadow px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-700">ChurchMS</h1>
-        <div className="flex gap-4">
-          <a href="/dashboard" className="text-gray-600 hover:text-blue-600">
-            Dashboard
-          </a>
-          <a href="/attendance" className="text-gray-600 hover:text-blue-600">
-            Attendance
-          </a>
+    <div style={{ minHeight: "100vh", background: "var(--bg-secondary)" }}>
+      <Navbar links={navLinks} />
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: 24,
+          }}
+        >
+          <div>
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 26,
+                fontWeight: 700,
+                color: "var(--text-primary)",
+                marginBottom: 4,
+              }}
+            >
+              Members
+            </h1>
+            <p style={{ color: "var(--text-secondary)", fontSize: 14 }}>
+              {members.length} total members
+            </p>
+          </div>
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              router.push("/login");
+            onClick={() => setShowForm(!showForm)}
+            style={{
+              background: "var(--gold)",
+              border: "none",
+              borderRadius: 8,
+              padding: "10px 20px",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "var(--font-body)",
             }}
-            className="text-red-500 hover:text-red-700"
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
-
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Members</h2>
-          <button
-            onClick={() => setShowForm(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
             + Add Member
           </button>
@@ -104,26 +121,77 @@ export default function MembersPage() {
         {/* Search */}
         <input
           type="text"
-          placeholder="Search members..."
+          placeholder="Search members by name..."
           value={search}
           onChange={handleSearch}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          style={{
+            width: "100%",
+            padding: "10px 16px",
+            border: "1px solid var(--border)",
+            borderRadius: 10,
+            background: "var(--bg-card)",
+            color: "var(--text-primary)",
+            fontSize: 14,
+            marginBottom: 20,
+            fontFamily: "var(--font-body)",
+            outline: "none",
+          }}
         />
 
-        {/* Add Member Form */}
+        {/* Add Form */}
         {showForm && (
-          <div className="bg-white rounded-2xl shadow p-6 mb-6">
-            <h3 className="text-lg font-semibold mb-4">New Member</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {["full_name", "phone", "email", "address"].map((field) => (
+          <div
+            style={{
+              background: "var(--bg-card)",
+              border: "1px solid var(--gold-border)",
+              borderRadius: 16,
+              padding: 24,
+              marginBottom: 20,
+              boxShadow: "var(--shadow-md)",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                marginBottom: 16,
+              }}
+            >
+              New Member
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 12,
+                marginBottom: 16,
+              }}
+            >
+              {[
+                ["full_name", "Full name", "text"],
+                ["phone", "Phone number", "text"],
+                ["email", "Email address", "email"],
+                ["address", "Address", "text"],
+              ].map(([field, placeholder, type]) => (
                 <input
                   key={field}
-                  placeholder={field.replace("_", " ")}
+                  type={type}
+                  placeholder={placeholder}
                   value={form[field]}
                   onChange={(e) =>
                     setForm({ ...form, [field]: e.target.value })
                   }
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  style={{
+                    padding: "10px 14px",
+                    border: "1px solid var(--border)",
+                    borderRadius: 8,
+                    background: "var(--bg-secondary)",
+                    color: "var(--text-primary)",
+                    fontSize: 14,
+                    fontFamily: "var(--font-body)",
+                    outline: "none",
+                  }}
                 />
               ))}
               <input
@@ -132,20 +200,49 @@ export default function MembersPage() {
                 onChange={(e) =>
                   setForm({ ...form, date_joined: e.target.value })
                 }
-                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  padding: "10px 14px",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  fontSize: 14,
+                  fontFamily: "var(--font-body)",
+                  outline: "none",
+                }}
               />
             </div>
-            <div className="flex gap-3 mt-4">
+            <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={handleAdd}
                 disabled={saving}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                style={{
+                  background: "var(--gold)",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  color: "#fff",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-body)",
+                  opacity: saving ? 0.7 : 1,
+                }}
               >
                 {saving ? "Saving..." : "Save Member"}
               </button>
               <button
                 onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300"
+                style={{
+                  background: "none",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  color: "var(--text-secondary)",
+                  fontSize: 14,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-body)",
+                }}
               >
                 Cancel
               </button>
@@ -153,48 +250,163 @@ export default function MembersPage() {
           </div>
         )}
 
-        {/* Members Table */}
-        <div className="bg-white rounded-2xl shadow overflow-hidden">
+        {/* Table */}
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
+            borderRadius: 16,
+            overflow: "hidden",
+            boxShadow: "var(--shadow-sm)",
+          }}
+        >
           {loading ? (
-            <p className="p-6 text-gray-400">Loading...</p>
+            <div
+              style={{
+                padding: 32,
+                textAlign: "center",
+                color: "var(--text-muted)",
+                fontSize: 14,
+              }}
+            >
+              Loading members...
+            </div>
           ) : members.length === 0 ? (
-            <p className="p-6 text-gray-400">
-              No members yet. Add your first member.
-            </p>
+            <div
+              style={{
+                padding: 48,
+                textAlign: "center",
+                color: "var(--text-muted)",
+                fontSize: 14,
+              }}
+            >
+              No members yet. Add your first member above.
+            </div>
           ) : (
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-gray-500 text-left">
-                <tr>
-                  <th className="px-6 py-3">Name</th>
-                  <th className="px-6 py-3">Phone</th>
-                  <th className="px-6 py-3">Email</th>
-                  <th className="px-6 py-3">Status</th>
-                  <th className="px-6 py-3">Joined</th>
-                  <th className="px-6 py-3"></th>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ background: "var(--bg-secondary)" }}>
+                  {["Name", "Phone", "Email", "Status", "Joined", ""].map(
+                    (h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "12px 20px",
+                          textAlign: "left",
+                          fontSize: 12,
+                          fontWeight: 500,
+                          color: "var(--text-muted)",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
               <tbody>
                 {members.map((m) => (
-                  <tr key={m.id} className="border-t hover:bg-gray-50">
-                    <td className="px-6 py-3 font-medium">{m.full_name}</td>
-                    <td className="px-6 py-3">{m.phone || "—"}</td>
-                    <td className="px-6 py-3">{m.email || "—"}</td>
-                    <td className="px-6 py-3">
+                  <tr
+                    key={m.id}
+                    style={{ borderTop: "1px solid var(--border)" }}
+                  >
+                    <td style={{ padding: "14px 20px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 32,
+                            height: 32,
+                            borderRadius: "50%",
+                            background: "var(--gold-bg)",
+                            border: "1px solid var(--gold-border)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: "var(--gold)",
+                          }}
+                        >
+                          {m.full_name.charAt(0).toUpperCase()}
+                        </div>
+                        <span
+                          style={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                            color: "var(--text-primary)",
+                          }}
+                        >
+                          {m.full_name}
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      style={{
+                        padding: "14px 20px",
+                        fontSize: 14,
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {m.phone || "—"}
+                    </td>
+                    <td
+                      style={{
+                        padding: "14px 20px",
+                        fontSize: 14,
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {m.email || "—"}
+                    </td>
+                    <td style={{ padding: "14px 20px" }}>
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          m.status === "active"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
+                        style={{
+                          padding: "3px 10px",
+                          borderRadius: 100,
+                          fontSize: 12,
+                          fontWeight: 500,
+                          background:
+                            m.status === "active"
+                              ? "rgba(22,163,74,0.1)"
+                              : "rgba(220,38,38,0.1)",
+                          color:
+                            m.status === "active"
+                              ? "var(--success)"
+                              : "var(--danger)",
+                          border: `1px solid ${m.status === "active" ? "rgba(22,163,74,0.2)" : "rgba(220,38,38,0.2)"}`,
+                        }}
                       >
                         {m.status}
                       </span>
                     </td>
-                    <td className="px-6 py-3">{m.date_joined || "—"}</td>
-                    <td className="px-6 py-3">
+                    <td
+                      style={{
+                        padding: "14px 20px",
+                        fontSize: 14,
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {m.date_joined || "—"}
+                    </td>
+                    <td style={{ padding: "14px 20px" }}>
                       <button
                         onClick={() => handleDelete(m.id)}
-                        className="text-red-500 hover:text-red-700 text-xs"
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "var(--danger)",
+                          fontSize: 13,
+                          cursor: "pointer",
+                          fontFamily: "var(--font-body)",
+                        }}
                       >
                         Delete
                       </button>

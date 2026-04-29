@@ -114,6 +114,7 @@ export default function HomePage() {
         <h1
           style={{
             fontSize: "clamp(40px, 7vw, 80px)",
+            fontFamily: "'Georgia', serif",
             fontWeight: "700",
             lineHeight: 1.1,
             letterSpacing: "-2px",
@@ -211,6 +212,7 @@ export default function HomePage() {
                 fontWeight: "700",
                 color: "#c9a84c",
                 letterSpacing: "-1px",
+                fontFamily: "'Georgia', serif",
               }}
             >
               {s.value}
