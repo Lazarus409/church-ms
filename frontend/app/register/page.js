@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
   const [form, setForm] = useState({
     church_name: "",
     church_email: "",

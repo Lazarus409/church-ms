@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function HomePage() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
 
   const t = {
     bg: dark ? "#0a0f1e" : "var(--bg-app)",
