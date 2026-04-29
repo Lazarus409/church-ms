@@ -79,7 +79,7 @@ export default function HomePage() {
           </div>
           <span
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'sans-serif'",
               fontSize: 20,
               fontWeight: 700,
               color: t.text,
@@ -147,24 +147,9 @@ export default function HomePage() {
           margin: "0 auto",
         }}
       >
-        <div
-          style={{
-            background: t.badgeBg,
-            border: "1px solid rgba(201,168,76,0.25)",
-            color: "#c9a84c",
-            padding: "6px 16px",
-            borderRadius: 100,
-            fontSize: 12,
-            fontWeight: 500,
-            display: "inline-block",
-            marginBottom: 24,
-          }}
-        >
-          ✦ Built for African Churches
-        </div>
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "sans-serif",
             fontSize: "clamp(40px, 6vw, 68px)",
             fontWeight: 700,
             lineHeight: 1.1,
