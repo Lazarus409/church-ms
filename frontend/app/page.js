@@ -90,7 +90,7 @@ export default function HomePage() {
         <div className="badge">✦ Built for African Churches</div>
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "sans-serif",
             fontSize: "clamp(40px, 6vw, 68px)",
             fontWeight: 700,
             lineHeight: 1.1,
