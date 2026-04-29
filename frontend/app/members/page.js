@@ -72,8 +72,26 @@ export default function MembersPage() {
     fetchMembers();
   };
 
+  const handleExportMembers = async () => {
+    try {
+      const res = await api.get("/export/members", { responseType: "blob" });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "members.csv");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch {
+      alert("Export failed");
+    }
+  };
+
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
+    <div
+      style={{ minHeight: "100vh", background: "var(--bg-app)" }}
+      className="page-shell"
+    >
       <Navbar links={navLinks} />
       <div className="page-content">
         <div className="page-header">
@@ -234,6 +252,40 @@ export default function MembersPage() {
               >
                 Cancel
               </button>
+              <div style={{ display: "flex", gap: 12 }}>
+                <button
+                  onClick={handleExportMembers}
+                  style={{
+                    background: "rgba(201,168,76,0.1)",
+                    border: "1px solid rgba(201,168,76,0.2)",
+                    color: "#c9a84c",
+                    padding: "10px 18px",
+                    borderRadius: 8,
+                    fontSize: 14,
+                    fontWeight: 500,
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  ↓ Export CSV
+                </button>
+                <button
+                  onClick={() => setShowForm(true)}
+                  style={{
+                    background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
+                    color: "#0a0f1e",
+                    padding: "10px 18px",
+                    borderRadius: 8,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    border: "none",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  + Add Member
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -272,138 +324,138 @@ export default function MembersPage() {
             </div>
           ) : (
             <div className="table-scroll">
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr style={{ background: "var(--bg-secondary)" }}>
-                  {["Name", "Phone", "Email", "Status", "Joined", ""].map(
-                    (h) => (
-                      <th
-                        key={h}
-                        style={{
-                          padding: "12px 20px",
-                          textAlign: "left",
-                          fontSize: 12,
-                          fontWeight: 500,
-                          color: "var(--text-muted)",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ),
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {members.map((m) => (
-                  <tr
-                    key={m.id}
-                    style={{ borderTop: "1px solid var(--border)" }}
-                  >
-                    <td style={{ padding: "14px 20px" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 10,
-                        }}
-                      >
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ background: "var(--bg-secondary)" }}>
+                    {["Name", "Phone", "Email", "Status", "Joined", ""].map(
+                      (h) => (
+                        <th
+                          key={h}
+                          style={{
+                            padding: "12px 20px",
+                            textAlign: "left",
+                            fontSize: 12,
+                            fontWeight: 500,
+                            color: "var(--text-muted)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                          }}
+                        >
+                          {h}
+                        </th>
+                      ),
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((m) => (
+                    <tr
+                      key={m.id}
+                      style={{ borderTop: "1px solid var(--border)" }}
+                    >
+                      <td style={{ padding: "14px 20px" }}>
                         <div
                           style={{
-                            width: 32,
-                            height: 32,
-                            borderRadius: "50%",
-                            background: "var(--gold-bg)",
-                            border: "1px solid var(--gold-border)",
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 12,
-                            fontWeight: 600,
-                            color: "var(--gold)",
+                            gap: 10,
                           }}
                         >
-                          {m.full_name.charAt(0).toUpperCase()}
+                          <div
+                            style={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: "50%",
+                              background: "var(--gold-bg)",
+                              border: "1px solid var(--gold-border)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 12,
+                              fontWeight: 600,
+                              color: "var(--gold)",
+                            }}
+                          >
+                            {m.full_name.charAt(0).toUpperCase()}
+                          </div>
+                          <span
+                            style={{
+                              fontSize: 14,
+                              fontWeight: 500,
+                              color: "var(--text-primary)",
+                            }}
+                          >
+                            {m.full_name}
+                          </span>
                         </div>
+                      </td>
+                      <td
+                        style={{
+                          padding: "14px 20px",
+                          fontSize: 14,
+                          color: "var(--text-secondary)",
+                        }}
+                      >
+                        {m.phone || "—"}
+                      </td>
+                      <td
+                        style={{
+                          padding: "14px 20px",
+                          fontSize: 14,
+                          color: "var(--text-secondary)",
+                        }}
+                      >
+                        {m.email || "—"}
+                      </td>
+                      <td style={{ padding: "14px 20px" }}>
                         <span
                           style={{
-                            fontSize: 14,
+                            padding: "3px 10px",
+                            borderRadius: 100,
+                            fontSize: 12,
                             fontWeight: 500,
-                            color: "var(--text-primary)",
+                            background:
+                              m.status === "active"
+                                ? "rgba(22,163,74,0.1)"
+                                : "rgba(220,38,38,0.1)",
+                            color:
+                              m.status === "active"
+                                ? "var(--success)"
+                                : "var(--danger)",
+                            border: `1px solid ${m.status === "active" ? "rgba(22,163,74,0.2)" : "rgba(220,38,38,0.2)"}`,
                           }}
                         >
-                          {m.full_name}
+                          {m.status}
                         </span>
-                      </div>
-                    </td>
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        fontSize: 14,
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {m.phone || "—"}
-                    </td>
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        fontSize: 14,
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {m.email || "—"}
-                    </td>
-                    <td style={{ padding: "14px 20px" }}>
-                      <span
+                      </td>
+                      <td
                         style={{
-                          padding: "3px 10px",
-                          borderRadius: 100,
-                          fontSize: 12,
-                          fontWeight: 500,
-                          background:
-                            m.status === "active"
-                              ? "rgba(22,163,74,0.1)"
-                              : "rgba(220,38,38,0.1)",
-                          color:
-                            m.status === "active"
-                              ? "var(--success)"
-                              : "var(--danger)",
-                          border: `1px solid ${m.status === "active" ? "rgba(22,163,74,0.2)" : "rgba(220,38,38,0.2)"}`,
+                          padding: "14px 20px",
+                          fontSize: 14,
+                          color: "var(--text-secondary)",
                         }}
                       >
-                        {m.status}
-                      </span>
-                    </td>
-                    <td
-                      style={{
-                        padding: "14px 20px",
-                        fontSize: 14,
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {m.date_joined || "—"}
-                    </td>
-                    <td style={{ padding: "14px 20px" }}>
-                      <button
-                        onClick={() => handleDelete(m.id)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "var(--danger)",
-                          fontSize: 13,
-                          cursor: "pointer",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        {m.date_joined || "—"}
+                      </td>
+                      <td style={{ padding: "14px 20px" }}>
+                        <button
+                          onClick={() => handleDelete(m.id)}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "var(--danger)",
+                            fontSize: 13,
+                            cursor: "pointer",
+                            fontFamily: "var(--font-body)",
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </div>

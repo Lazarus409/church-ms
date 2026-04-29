@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth, members, attendance, dashboard
+from routers import auth, members, attendance, dashboard, export
 
 app = FastAPI(title="Church MS API")
 
@@ -19,6 +19,7 @@ app.include_router(auth.router)
 app.include_router(members.router)
 app.include_router(attendance.router)
 app.include_router(dashboard.router)
+app.include_router(export.router)
 
 @app.get("/")
 def root():
