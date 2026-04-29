@@ -3,10 +3,37 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 const navLinks = [
   { label: "Members", href: "/members" },
   { label: "Attendance", href: "/attendance" },
+  { label: "Settings", href: "/settings" },
+];
+
+const growthTools = [
+  {
+    title: "CSV export",
+    description: "Download members in one click for admin reports and outreach.",
+    href: "/members",
+    cta: "Export from Members",
+  },
+  {
+    title: "Custom branding",
+    description: "Match the app to your church colors, name, and logo mark.",
+    href: "/settings",
+    cta: "Open Settings",
+  },
+  {
+    title: "SMS / WhatsApp alerts",
+    description: "Notify absent members and auto-follow up after service.",
+    comingSoon: true,
+  },
+  {
+    title: "QR check-in",
+    description: "Speed up service attendance with a scan-to-check-in flow.",
+    comingSoon: true,
+  },
 ];
 
 export default function DashboardPage() {
@@ -25,7 +52,7 @@ export default function DashboardPage() {
       .then((res) => setStats(res.data))
       .catch(() => router.push("/login"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [router]);
 
   if (loading)
     return (
@@ -126,6 +153,98 @@ export default function DashboardPage() {
               </p>
             </div>
           ))}
+        </div>
+
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 28,
+            boxShadow: "var(--shadow-sm)",
+          }}
+        >
+          <div style={{ marginBottom: 18 }}>
+            <p
+              style={{
+                fontSize: 12,
+                color: "var(--text-muted)",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                marginBottom: 8,
+              }}
+            >
+              Growth tools
+            </p>
+            <h2 style={{ fontSize: 18, fontWeight: 700, color: "var(--text-primary)" }}>
+              Features churches will pay for
+            </h2>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: 14,
+            }}
+          >
+            {growthTools.map((tool) => (
+              <div
+                key={tool.title}
+                style={{
+                  border: "1px solid var(--border)",
+                  borderRadius: 14,
+                  padding: 18,
+                  background: "var(--bg-secondary)",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    marginBottom: 8,
+                  }}
+                >
+                  {tool.title}
+                </p>
+                <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                  {tool.description}
+                </p>
+                {tool.comingSoon ? (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginTop: 14,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    Coming soon
+                  </span>
+                ) : (
+                  <Link
+                    href={tool.href}
+                    style={{
+                      display: "inline-block",
+                      marginTop: 14,
+                      textDecoration: "none",
+                      background: "var(--gold)",
+                      color: "#fff",
+                      borderRadius: 8,
+                      padding: "8px 14px",
+                      fontSize: 13,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {tool.cta}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Attendance Table */}

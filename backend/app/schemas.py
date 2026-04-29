@@ -30,6 +30,7 @@ class UserOut(BaseModel):
     email: str
     role: str
     church_id: int
+    church_name: str
     created_at: datetime
 
     class Config:

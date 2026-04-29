@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Attendance", href: "/attendance" },
+  { label: "Settings", href: "/settings" },
 ];
 
 export default function MembersPage() {
@@ -24,10 +25,6 @@ export default function MembersPage() {
   });
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    fetchMembers();
-  }, []);
-
   const fetchMembers = async () => {
     try {
       const res = await api.get("/members/");
@@ -38,6 +35,11 @@ export default function MembersPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchMembers();
+  }, []);
 
   const handleSearch = async (e) => {
     const val = e.target.value;
@@ -72,6 +74,37 @@ export default function MembersPage() {
     fetchMembers();
   };
 
+  const handleExportCsv = () => {
+    if (!members.length) {
+      alert("No members available to export");
+      return;
+    }
+
+    const headers = ["Full Name", "Phone", "Email", "Address", "Status", "Joined"];
+    const rows = members.map((member) =>
+      [
+        member.full_name,
+        member.phone || "",
+        member.email || "",
+        member.address || "",
+        member.status || "",
+        member.date_joined || "",
+      ]
+        .map((value) => `"${String(value).replace(/"/g, '""')}"`)
+        .join(","),
+    );
+    const csv = [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "church-members.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
       <Navbar links={navLinks} />
@@ -94,6 +127,22 @@ export default function MembersPage() {
             </p>
           </div>
           <div className="page-header__actions">
+            <button
+              onClick={handleExportCsv}
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
+                borderRadius: 8,
+                padding: "10px 20px",
+                color: "var(--text-primary)",
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              Export CSV
+            </button>
             <button
               onClick={() => setShowForm(!showForm)}
               style={{

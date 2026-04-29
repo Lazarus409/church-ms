@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Members", href: "/members" },
+  { label: "Settings", href: "/settings" },
 ];
 
 export default function AttendancePage() {
@@ -21,11 +22,6 @@ export default function AttendancePage() {
     scheduled_date: "",
   });
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    fetchServices();
-    fetchMembers();
-  }, []);
 
   const fetchServices = async () => {
     try {
@@ -43,6 +39,13 @@ export default function AttendancePage() {
     res.data.forEach((m) => (initial[m.id] = "present"));
     setAttendance(initial);
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchServices();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchMembers();
+  }, []);
 
   const handleCreateService = async () => {
     setSaving(true);

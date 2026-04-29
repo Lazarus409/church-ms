@@ -4,6 +4,52 @@ import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+function RegistrationField({
+  theme,
+  label,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+}) {
+  return (
+    <div>
+      <label
+        style={{
+          display: "block",
+          fontSize: 13,
+          fontWeight: 500,
+          color: theme.labelColor,
+          marginBottom: 8,
+        }}
+      >
+        {label}
+      </label>
+      <input
+        type={type}
+        required
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={{
+          width: "100%",
+          background: theme.inputBg,
+          border: `1px solid ${theme.inputBorder}`,
+          borderRadius: 10,
+          padding: "13px 16px",
+          color: theme.inputColor,
+          fontSize: 14,
+          fontFamily: "inherit",
+          outline: "none",
+          transition: "border-color 0.2s",
+        }}
+        onFocus={(e) => (e.target.style.borderColor = "rgba(201,168,76,0.5)")}
+        onBlur={(e) => (e.target.style.borderColor = theme.inputBorder)}
+      />
+    </div>
+  );
+}
+
 export default function RegisterPage() {
   const router = useRouter();
   const [dark, setDark] = useState(false);
@@ -44,13 +90,13 @@ export default function RegisterPage() {
     }
     setLoading(true);
     try {
-      const res = await api.post("/auth/register", {
-        church_name: form.church_name,
-        church_email: form.church_email,
-        full_name: form.full_name,
-        email: form.email,
-        password: form.password,
-      });
+    const res = await api.post("/auth/register", {
+      church_name: form.church_name,
+      church_email: form.church_email,
+      full_name: form.full_name,
+      email: form.email,
+      password: form.password,
+    });
       localStorage.setItem("token", res.data.access_token);
       router.push("/dashboard");
     } catch (err) {
@@ -59,43 +105,6 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
-
-  const Field = ({ label, type = "text", placeholder, value, onChange }) => (
-    <div>
-      <label
-        style={{
-          display: "block",
-          fontSize: 13,
-          fontWeight: 500,
-          color: t.labelColor,
-          marginBottom: 8,
-        }}
-      >
-        {label}
-      </label>
-      <input
-        type={type}
-        required
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        style={{
-          width: "100%",
-          background: t.inputBg,
-          border: `1px solid ${t.inputBorder}`,
-          borderRadius: 10,
-          padding: "13px 16px",
-          color: t.inputColor,
-          fontSize: 14,
-          fontFamily: "inherit",
-          outline: "none",
-          transition: "border-color 0.2s",
-        }}
-        onFocus={(e) => (e.target.style.borderColor = "rgba(201,168,76,0.5)")}
-        onBlur={(e) => (e.target.style.borderColor = t.inputBorder)}
-      />
-    </div>
-  );
 
   return (
     <div
@@ -322,7 +331,8 @@ export default function RegisterPage() {
               />
             </div>
 
-            <Field
+            <RegistrationField
+              theme={t}
               label="Church name"
               placeholder="Grace Chapel"
               value={form.church_name}
@@ -330,7 +340,8 @@ export default function RegisterPage() {
                 setForm({ ...form, church_name: e.target.value })
               }
             />
-            <Field
+            <RegistrationField
+              theme={t}
               label="Church email"
               type="email"
               placeholder="info@gracechapel.com"
@@ -369,13 +380,15 @@ export default function RegisterPage() {
               />
             </div>
 
-            <Field
+            <RegistrationField
+              theme={t}
               label="Your full name"
               placeholder="John Mensah"
               value={form.full_name}
               onChange={(e) => setForm({ ...form, full_name: e.target.value })}
             />
-            <Field
+            <RegistrationField
+              theme={t}
               label="Your email"
               type="email"
               placeholder="john@gracechapel.com"
@@ -391,14 +404,16 @@ export default function RegisterPage() {
               }}
               className="responsive-grid-2"
             >
-              <Field
+              <RegistrationField
+                theme={t}
                 label="Password"
                 type="password"
                 placeholder="••••••••"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
-              <Field
+              <RegistrationField
+                theme={t}
                 label="Confirm password"
                 type="password"
                 placeholder="••••••••"
