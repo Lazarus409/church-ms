@@ -1,8 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
-import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -30,221 +29,225 @@ export default function LoginPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "var(--bg-secondary)",
+        background: "#0a0f1e",
         display: "flex",
-        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+        padding: 20,
       }}
     >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        .input-field { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+        .input-field::placeholder { color: #475569; }
+        .input-field:focus { border-color: rgba(201,168,76,0.5); }
+        .btn-gold { width: 100%; background: linear-gradient(135deg, #c9a84c, #e8c96d); color: #0a0f1e; padding: 14px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; transition: opacity 0.2s, transform 0.2s; }
+        .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-gold:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      `}</style>
+
+      {/* Left decoration */}
       <div
         style={{
-          padding: "16px 32px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          overflow: "hidden",
+          pointerEvents: "none",
         }}
       >
-        <Link
-          href="/"
+        <div
           style={{
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
+            position: "absolute",
+            top: -200,
+            right: -200,
+            width: 600,
+            height: 600,
+            background:
+              "radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)",
+            borderRadius: "50%",
           }}
-        >
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              background: "var(--gold)",
-              borderRadius: 6,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 13,
-              color: "#fff",
-            }}
-          >
-            ✝
-          </div>
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: 16,
-              fontWeight: 700,
-              color: "var(--text-primary)",
-            }}
-          >
-            ChurchMS
-          </span>
-        </Link>
-        <ThemeToggle />
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: -200,
+            left: -200,
+            width: 500,
+            height: 500,
+            background:
+              "radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%)",
+            borderRadius: "50%",
+          }}
+        />
       </div>
 
       <div
         style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "40px 16px",
+          width: "100%",
+          maxWidth: 420,
+          position: "relative",
+          zIndex: 1,
         }}
       >
-        <div style={{ width: "100%", maxWidth: 420 }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <h1
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: 28,
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                marginBottom: 8,
-              }}
-            >
-              Welcome back
-            </h1>
-            <p style={{ color: "var(--text-secondary)", fontSize: 14 }}>
-              Sign in to your ChurchMS account
-            </p>
-          </div>
-
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div
             style={{
-              background: "var(--bg-card)",
-              border: "1px solid var(--border)",
-              borderRadius: 16,
-              padding: 32,
-              boxShadow: "var(--shadow-md)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 8,
             }}
           >
-            {error && (
-              <div
-                style={{
-                  background: "rgba(220,38,38,0.08)",
-                  border: "1px solid rgba(220,38,38,0.2)",
-                  color: "var(--danger)",
-                  padding: "10px 16px",
-                  borderRadius: 8,
-                  marginBottom: 20,
-                  fontSize: 14,
-                }}
-              >
-                {error}
-              </div>
-            )}
-
-            <form
-              onSubmit={handleSubmit}
-              style={{ display: "flex", flexDirection: "column", gap: 16 }}
-            >
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    color: "var(--text-secondary)",
-                    marginBottom: 6,
-                  }}
-                >
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@church.com"
-                  style={{
-                    width: "100%",
-                    padding: "10px 14px",
-                    border: "1px solid var(--border)",
-                    borderRadius: 8,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    fontSize: 14,
-                    outline: "none",
-                    fontFamily: "var(--font-body)",
-                  }}
-                />
-              </div>
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    color: "var(--text-secondary)",
-                    marginBottom: 6,
-                  }}
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  required
-                  value={form.password}
-                  onChange={(e) =>
-                    setForm({ ...form, password: e.target.value })
-                  }
-                  placeholder="••••••••"
-                  style={{
-                    width: "100%",
-                    padding: "10px 14px",
-                    border: "1px solid var(--border)",
-                    borderRadius: 8,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    fontSize: 14,
-                    outline: "none",
-                    fontFamily: "var(--font-body)",
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                style={{
-                  width: "100%",
-                  padding: "11px",
-                  background: "var(--gold)",
-                  border: "none",
-                  borderRadius: 8,
-                  color: "#fff",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  fontFamily: "var(--font-body)",
-                  opacity: loading ? 0.7 : 1,
-                  marginTop: 4,
-                }}
-              >
-                {loading ? "Signing in..." : "Sign In"}
-              </button>
-            </form>
-          </div>
-
-          <p
-            style={{
-              textAlign: "center",
-              marginTop: 20,
-              fontSize: 14,
-              color: "var(--text-secondary)",
-            }}
-          >
-            Don't have an account?{" "}
-            <Link
-              href="/register"
+            <div
               style={{
-                color: "var(--gold)",
-                textDecoration: "none",
-                fontWeight: 500,
+                width: 40,
+                height: 40,
+                background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
+                borderRadius: 10,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 20,
               }}
             >
-              Register your church
-            </Link>
+              ✝
+            </div>
+            <span
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 26,
+                fontWeight: 700,
+                color: "#fff",
+              }}
+            >
+              ChurchMS
+            </span>
+          </div>
+          <p style={{ color: "#64748b", fontSize: 14 }}>
+            Sign in to your account
           </p>
         </div>
+
+        {/* Card */}
+        <div
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 20,
+            padding: "36px 32px",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          {error && (
+            <div
+              style={{
+                background: "rgba(220,38,38,0.1)",
+                border: "1px solid rgba(220,38,38,0.2)",
+                borderRadius: 10,
+                padding: "12px 16px",
+                marginBottom: 20,
+                color: "#fca5a5",
+                fontSize: 13,
+              }}
+            >
+              {error}
+            </div>
+          )}
+
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: 16 }}
+          >
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "#94a3b8",
+                  marginBottom: 8,
+                }}
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                required
+                className="input-field"
+                placeholder="you@church.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "#94a3b8",
+                  marginBottom: 8,
+                }}
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                required
+                className="input-field"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-gold"
+              style={{ marginTop: 8 }}
+            >
+              {loading ? "Signing in..." : "Sign In →"}
+            </button>
+          </form>
+        </div>
+
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: 24,
+            fontSize: 14,
+            color: "#475569",
+          }}
+        >
+          Don't have an account?{" "}
+          <Link
+            href="/register"
+            style={{
+              color: "#c9a84c",
+              textDecoration: "none",
+              fontWeight: 500,
+            }}
+          >
+            Register your church
+          </Link>
+        </p>
+
+        <p style={{ textAlign: "center", marginTop: 16 }}>
+          <Link
+            href="/"
+            style={{ color: "#334155", textDecoration: "none", fontSize: 13 }}
+          >
+            ← Back to home
+          </Link>
+        </p>
       </div>
     </div>
   );

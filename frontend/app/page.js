@@ -333,7 +333,7 @@ export default function HomePage() {
           </div>
           <h2
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "sans-serif",
               fontSize: "clamp(28px, 4vw, 40px)",
               fontWeight: 700,
               color: t.text,
@@ -412,7 +412,7 @@ export default function HomePage() {
       <section style={{ textAlign: "center", padding: "60px 40px 80px" }}>
         <h2
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "sans-serif",
             fontSize: "clamp(28px, 4vw, 44px)",
             fontWeight: 700,
             marginBottom: 16,
