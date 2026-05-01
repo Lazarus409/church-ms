@@ -173,7 +173,10 @@ export default function HomePage() {
             ChurchMS
           </span>
         </div>
-        <div style={{ display: "flex", gap: 24, alignItems: "center" }} className="home-nav-actions">
+        <div
+          style={{ display: "flex", gap: 24, alignItems: "center" }}
+          className="home-nav-actions"
+        >
           <a
             href="#features"
             style={{
@@ -318,9 +321,7 @@ export default function HomePage() {
                 "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
             }}
           />
-        <div
-          className="home-preview-grid"
-        >
+          <div className="home-preview-grid">
             {[
               ["Total Members", "248", "+12%"],
               ["Active Members", "231", "+8%"],
@@ -500,14 +501,14 @@ export default function HomePage() {
           Ready to get started?
         </h2>
         <p style={{ color: t.muted, fontSize: 16, marginBottom: 32 }}>
-          Register your church in under 2 minutes. Free forever to start.
+          Register your church in under 2 minutes.
         </p>
         <Link
           href="/register"
           className="btn-primary"
           style={{ fontSize: 16, padding: "14px 36px" }}
         >
-          Register Your Church Free →
+          Register Your Church →
         </Link>
       </section>
 

@@ -15,6 +15,7 @@ export default function MembersPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [importing, setImporting] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
     phone: "",
@@ -23,7 +24,6 @@ export default function MembersPage() {
     date_joined: "",
   });
   const [saving, setSaving] = useState(false);
-  const [importing, setImporting] = useState(false);
 
   const fetchMembers = async () => {
     try {
