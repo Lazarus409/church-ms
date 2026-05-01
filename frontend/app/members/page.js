@@ -23,6 +23,7 @@ export default function MembersPage() {
     date_joined: "",
   });
   const [saving, setSaving] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   const fetchMembers = async () => {
     try {
@@ -86,7 +87,27 @@ export default function MembersPage() {
       alert("Export failed");
     }
   };
-
+  const handleImport = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImporting(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await api.post("/export/members/import", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      alert(
+        `✅ Import complete! ${res.data.added} members added, ${res.data.skipped} skipped.`,
+      );
+      fetchMembers();
+    } catch (err) {
+      alert(err.response?.data?.detail || "Import failed");
+    } finally {
+      setImporting(false);
+      e.target.value = "";
+    }
+  };
   return (
     <div
       style={{ minHeight: "100vh", background: "var(--bg-app)" }}
@@ -146,6 +167,28 @@ export default function MembersPage() {
             >
               + Add Member
             </button>
+            <label
+              style={{
+                background: "rgba(201,168,76,0.1)",
+                border: "1px solid rgba(201,168,76,0.2)",
+                color: "#c9a84c",
+                padding: "10px 18px",
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 500,
+                cursor: importing ? "not-allowed" : "pointer",
+                fontFamily: "inherit",
+                opacity: importing ? 0.6 : 1,
+              }}
+            >
+              {importing ? "Importing..." : "↑ Import CSV"}
+              <input
+                type="file"
+                accept=".csv,.xlsx"
+                onChange={handleImport}
+                style={{ display: "none" }}
+              />
+            </label>
           </div>
         </div>
 
