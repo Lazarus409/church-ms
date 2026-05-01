@@ -111,7 +111,25 @@ export default function MembersPage() {
               {members.length} total members
             </p>
           </div>
-          <div className="page-header__actions">
+
+          {/* ✅ All actions moved here to the header */}
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <button
+              onClick={handleExportMembers}
+              style={{
+                background: "rgba(201,168,76,0.1)",
+                border: "1px solid rgba(201,168,76,0.2)",
+                color: "#c9a84c",
+                padding: "10px 18px",
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 500,
+                cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+            >
+              ↓ Export CSV
+            </button>
             <button
               onClick={() => setShowForm(!showForm)}
               style={{
@@ -218,7 +236,7 @@ export default function MembersPage() {
                 }}
               />
             </div>
-            <div style={{ display: "flex", gap: 10 }} className="stack-actions">
+            <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={handleAdd}
                 disabled={saving}
@@ -252,40 +270,6 @@ export default function MembersPage() {
               >
                 Cancel
               </button>
-              <div style={{ display: "flex", gap: 12 }}>
-                <button
-                  onClick={handleExportMembers}
-                  style={{
-                    background: "rgba(201,168,76,0.1)",
-                    border: "1px solid rgba(201,168,76,0.2)",
-                    color: "#c9a84c",
-                    padding: "10px 18px",
-                    borderRadius: 8,
-                    fontSize: 14,
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  ↓ Export CSV
-                </button>
-                <button
-                  onClick={() => setShowForm(true)}
-                  style={{
-                    background: "linear-gradient(135deg, #c9a84c, #e8c96d)",
-                    color: "#0a0f1e",
-                    padding: "10px 18px",
-                    borderRadius: 8,
-                    fontSize: 14,
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    border: "none",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  + Add Member
-                </button>
-              </div>
             </div>
           </div>
         )}
