@@ -291,9 +291,7 @@ export default function NewMembersPage() {
                             border: `1px solid ${m.reason === "worship" ? "var(--gold-border)" : "rgba(100,116,139,0.2)"}`,
                           }}
                         >
-                          {m.reason === "worship"
-                            ? "🙏 Joining"
-                            : "👋 Passing by"}
+                          {m.reason === "worship" ? "Joining" : " Passing by"}
                         </span>
                       </td>
                       <td style={{ padding: "14px 20px" }}>
