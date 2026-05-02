@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Enum, DateTime
+from sqlalchemy import Boolean, Column, Integer, String, Date, ForeignKey, Enum, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
@@ -92,3 +92,15 @@ class Attendance(Base):
 
     member = relationship("Member", back_populates="attendance")
     service = relationship("Service", back_populates="attendance")
+    
+class NewMember(Base):
+    __tablename__ = "new_members"
+
+    id = Column(Integer, primary_key=True, index=True)
+    church_id = Column(Integer, ForeignKey("churches.id"), nullable=False)
+    full_name = Column(String, nullable=False)
+    phone = Column(String)
+    email = Column(String)
+    reason = Column(String, nullable=False)
+    added_to_members = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
