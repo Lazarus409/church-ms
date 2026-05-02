@@ -1,16 +1,18 @@
 import pandas as pd
 import io
+import csv
+import qrcode
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from database import get_db
-from models import Member, Attendance, Service, User
+from models import Member, Attendance, Service, User, Church
 from auth import get_current_user
-import csv
 
 router = APIRouter(prefix="/export", tags=["Export"])
 
 
+# --- Export Members ---
 @router.get("/members")
 def export_members(
     db: Session = Depends(get_db),
@@ -34,6 +36,7 @@ def export_members(
     )
 
 
+# --- Export Attendance ---
 @router.get("/attendance")
 def export_attendance(
     db: Session = Depends(get_db),
@@ -61,6 +64,7 @@ def export_attendance(
     )
 
 
+# --- Import Members ---
 @router.post("/members/import")
 async def import_members(
     file: UploadFile = File(...),
@@ -77,10 +81,8 @@ async def import_members(
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid file format")
 
-    # Normalize column names
     df.columns = df.columns.str.lower().str.strip().str.replace(" ", "_").str.replace("-", "_")
 
-    # Flexible name column mapping
     name_variants = ["full_name", "name", "member_name", "fullname", "full name", "member", "names"]
     phone_variants = ["phone", "phone_number", "mobile", "mobile_number", "tel", "telephone", "contact"]
     email_variants = ["email", "email_address", "mail", "e_mail"]
@@ -142,3 +144,31 @@ async def import_members(
 
     db.commit()
     return {"added": added, "skipped": skipped}
+
+
+# --- QR Code (public, no auth needed) ---
+@router.get("/qr/entrance/{church_id}")
+def get_entrance_qr(
+    church_id: int,
+    db: Session = Depends(get_db)
+):
+    church = db.query(Church).filter(Church.id == church_id).first()
+    if not church:
+        raise HTTPException(status_code=404, detail="Church not found")
+
+    url = f"https://church-ms-seven.vercel.app/checkin/{church_id}"
+
+    qr = qrcode.QRCode(version=1, box_size=10, border=4)
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    buf.seek(0)
+
+    return StreamingResponse(
+        buf,
+        media_type="image/png",
+        headers={"Content-Disposition": "inline; filename=entrance_qr.png"}
+    )

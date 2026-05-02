@@ -27,7 +27,9 @@ export default function QRPage() {
       const id = payload.church_id;
       setChurchId(id);
       setCheckinUrl(`${window.location.origin}/checkin/${id}`);
-      setQrUrl(`https://church-ms-production.up.railway.app/qr/entrance/${id}`);
+      setQrUrl(
+        `https://church-ms-production.up.railway.app/export/qr/entrance/${id}`,
+      );
     } catch {
       router.push("/login");
     }
