@@ -31,7 +31,13 @@ export default function NewMembersPage() {
     api
       .get("/new-members/")
       .then((res) => setNewMembers(res.data))
-      .catch(() => router.push("/login"))
+      .catch((err) => {
+        if (err.response?.status === 401) {
+          router.push("/login");
+        } else {
+          console.error("Error fetching visitors:", err);
+        }
+      })
       .finally(() => setLoading(false));
   }, []);
 
