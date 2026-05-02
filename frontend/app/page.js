@@ -221,7 +221,7 @@ export default function HomePage() {
           </button>
 
           <Link href="/register" className="btn-primary">
-            Get Started Free
+            Get Started
           </Link>
         </div>
       </nav>
@@ -272,7 +272,7 @@ export default function HomePage() {
           className="home-hero-actions"
         >
           <Link href="/register" className="btn-primary">
-            Start for Free →
+            Get Started
           </Link>
           <Link
             href="/login"
