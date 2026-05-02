@@ -5,7 +5,7 @@ from models import NewMember, Member, User
 from auth import get_current_user
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import date, datetime
 
 router = APIRouter(prefix="/new-members", tags=["New Members"])
 
@@ -17,6 +17,8 @@ class NewMemberCreate(BaseModel):
     reason: str
 
 
+from datetime import datetime
+
 class NewMemberOut(BaseModel):
     id: int
     full_name: str
@@ -25,7 +27,7 @@ class NewMemberOut(BaseModel):
     reason: str
     added_to_members: bool
     church_id: int
-    created_at: str
+    created_at: datetime
 
     class Config:
         from_attributes = True
