@@ -77,33 +77,63 @@ async def import_members(
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid file format")
 
-    if "full_name" not in [c.lower().strip() for c in df.columns]:
-        raise HTTPException(status_code=400, detail="File must have a 'full_name' column")
+    # Normalize column names
+    df.columns = df.columns.str.lower().str.strip().str.replace(" ", "_").str.replace("-", "_")
 
-    df.columns = df.columns.str.lower().str.strip()
+    # Flexible name column mapping
+    name_variants = ["full_name", "name", "member_name", "fullname", "full name", "member", "names"]
+    phone_variants = ["phone", "phone_number", "mobile", "mobile_number", "tel", "telephone", "contact"]
+    email_variants = ["email", "email_address", "mail", "e_mail"]
+    address_variants = ["address", "location", "home_address", "residence", "area"]
+    date_variants = ["date_joined", "join_date", "date", "joined", "joined_date", "membership_date", "date_of_joining"]
+
+    def find_column(df, variants):
+        for v in variants:
+            normalized = v.lower().replace(" ", "_").replace("-", "_")
+            if normalized in df.columns:
+                return normalized
+        return None
+
+    name_col = find_column(df, name_variants)
+    if not name_col:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Could not find a name column. Your columns are: {list(df.columns)}. Please include one of: full_name, name, member_name."
+        )
+
+    phone_col = find_column(df, phone_variants)
+    email_col = find_column(df, email_variants)
+    address_col = find_column(df, address_variants)
+    date_col = find_column(df, date_variants)
 
     added = 0
     skipped = 0
 
     for _, row in df.iterrows():
-        full_name = str(row.get("full_name", "")).strip()
-        if not full_name:
+        full_name = str(row.get(name_col, "")).strip()
+        if not full_name or full_name.lower() == "nan":
             skipped += 1
             continue
 
         date_joined = None
-        if "date_joined" in row and pd.notna(row["date_joined"]):
+        if date_col and pd.notna(row.get(date_col)):
             try:
-                date_joined = pd.to_datetime(row["date_joined"]).date()
+                date_joined = pd.to_datetime(row[date_col]).date()
             except Exception:
                 date_joined = None
+
+        def safe_get(col):
+            if col and pd.notna(row.get(col)):
+                val = str(row[col]).strip()
+                return val if val and val.lower() != "nan" else None
+            return None
 
         member = Member(
             church_id=current_user.church_id,
             full_name=full_name,
-            phone=str(row.get("phone", "") or "").strip() or None,
-            email=str(row.get("email", "") or "").strip() or None,
-            address=str(row.get("address", "") or "").strip() or None,
+            phone=safe_get(phone_col),
+            email=safe_get(email_col),
+            address=safe_get(address_col),
             date_joined=date_joined,
             status="active"
         )
