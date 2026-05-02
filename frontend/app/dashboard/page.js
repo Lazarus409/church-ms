@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 const navLinks = [
   { label: "Members", href: "/members" },
   { label: "Attendance", href: "/attendance" },
+  { label: "Visitors", href: "/new-members" },
+  { label: "QR Check-in", href: "/dashboard/qr" },
 ];
 
 export default function DashboardPage() {
@@ -46,7 +49,10 @@ export default function DashboardPage() {
     );
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-app)" }} className="page-shell">
+    <div
+      style={{ minHeight: "100vh", background: "var(--bg-app)" }}
+      className="page-shell"
+    >
       <Navbar links={navLinks} />
       <div className="page-content">
         <div style={{ marginBottom: 28 }}>
@@ -128,6 +134,91 @@ export default function DashboardPage() {
           ))}
         </div>
 
+        {/* Quick Actions */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: 16,
+            marginBottom: 28,
+          }}
+        >
+          {[
+            {
+              label: "QR Check-in",
+              desc: "Get entrance QR code",
+              icon: "📲",
+              href: "/dashboard/qr",
+            },
+            {
+              label: "New Visitors",
+              desc: "View visitor registrations",
+              icon: "👋",
+              href: "/new-members",
+            },
+            {
+              label: "Mark Attendance",
+              desc: "Record service attendance",
+              icon: "📋",
+              href: "/attendance",
+            },
+            {
+              label: "Members",
+              desc: "Manage church members",
+              icon: "👥",
+              href: "/members",
+            },
+          ].map(({ label, desc, icon, href }) => (
+            <Link
+              key={label}
+              href={href}
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
+                borderRadius: 12,
+                padding: "20px 24px",
+                boxShadow: "var(--shadow-sm)",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+              }}
+            >
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  background: "var(--gold-bg)",
+                  border: "1px solid var(--gold-border)",
+                  borderRadius: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                {icon}
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "var(--text-primary)",
+                    marginBottom: 2,
+                  }}
+                >
+                  {label}
+                </p>
+                <p style={{ fontSize: 12, color: "var(--text-secondary)" }}>
+                  {desc}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
         {/* Attendance Table */}
         <div
           style={{
@@ -190,7 +281,10 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {stats.attendance_trend.map((row, i) => (
-                    <tr key={i} style={{ borderTop: "1px solid var(--border)" }}>
+                    <tr
+                      key={i}
+                      style={{ borderTop: "1px solid var(--border)" }}
+                    >
                       <td
                         style={{
                           padding: "14px 24px",
